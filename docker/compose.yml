@@ -46,6 +46,20 @@ services:
     ports:
       - 9696:9696
 
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ${APPDATA}prowlarr:/config
+      - ${GMEDIA_MOVIE}
+      - ${DOWNLOAD}
+    ports:
+      - 6767:6767
+    restart: unless-stopped
 
   sabnzbd:
     image: ghcr.io/linuxserver/sabnzbd
@@ -94,19 +108,19 @@ services:
   #   ports:
   #     - 5055:5055
       
-  jackett:
-    image: linuxserver/jackett
-    container_name: jackett
-    restart: unless-stopped
-    environment:
-      - PUID=${USVC}
-      - PGID=${GSVC}
-      - TZ=${TZ}
-      - AUTO_UPDATE=true
-    volumes:
-      - ${APPDATA}jackett:/config
-    ports:
-      - 9117:9117
+  # jackett:
+  #   image: linuxserver/jackett
+  #   container_name: jackett
+  #   restart: unless-stopped
+  #   environment:
+  #     - PUID=${USVC}
+  #     - PGID=${GSVC}
+  #     - TZ=${TZ}
+  #     - AUTO_UPDATE=true
+  #   volumes:
+  #     - ${APPDATA}jackett:/config
+  #   ports:
+  #     - 9117:9117
       
   # tautulli:
   #   image: ghcr.io/linuxserver/tautulli
